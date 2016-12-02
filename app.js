@@ -2,21 +2,22 @@
    * Module dependencies
    */
  
- const path                 = require('path');
- const express              = require('express');
- const dotenv               = require('dotenv');
- const chalk                = require('chalk');
- const compression          = require('compression');
- const bodyParser           = require('body-parser');
- const cors                 = require('cors');
- const logger               = require('morgan');
- const expressStatusMonitor = require('express-status-monitor');
- const sass                 = require('node-sass-middleware');
- const mongoose             = require('mongoose');
- const session              = require('express-session');
- const MongoStore           = require('connect-mongo')(session);
- const flash                = require('flash');
- const lusca                = require('lusca');
+ import path                 from 'path';
+ import express              from 'express';
+ import dotenv               from 'dotenv';
+ import chalk                from 'chalk';
+ import compression          from 'compression';
+ import bodyParser           from 'body-parser';
+ import cors                 from 'cors';
+ import logger               from 'morgan';
+ import expressStatusMonitor from 'express-status-monitor';
+ import sass                 from 'node-sass-middleware';
+ import mongoose             from 'mongoose';
+ import session              from 'express-session';
+ import connectMongo         from 'connect-mongo';
+ import flash                from 'flash';
+ import lusca                from 'lusca';
+ import * as homeController  from './controllers/home';
  
  
  /**
@@ -59,6 +60,9 @@
  app.use(logger('dev'));
  app.use(bodyParser.json());
  app.use(bodyParser.urlencoded({extended: true}));
+ 
+ const MongoStore = connectMongo(session);
+ 
  app.use(session({
      resave: true,
      saveUninitialized: true,
@@ -97,7 +101,7 @@
   */
  
  const homeRoute            = express.Router();
- const homeController       = require('./controllers/home');
+ 
  
  homeRoute.route("/").get(homeController.index);
  
@@ -107,4 +111,4 @@
   * Export app
   */
   
-  module.exports = app;
+  export default app;

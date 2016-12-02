@@ -3,8 +3,8 @@
  * Home page.
  */
  
- module.exports.index = (req, res)=>{
+ export function index(req, res){
    res.render('home', {
       title: 'Home' 
    });  
- };
+ }

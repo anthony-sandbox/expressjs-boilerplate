@@ -1,11 +1,16 @@
-const http                  = require('http');
-const localtunnel           = require('localtunnel');
-const chalk                = require('chalk');
-const app                   = require('./app');
 
-/**
-  * Start Express Server
+ /**
+  * Moduel dependencies
   */
+  
+  import http           from 'http';
+  import localtunnel    from 'localtunnel';
+  import chalk          from 'chalk';
+  import app            from './app';
+
+ /**
+   * Start Express Server
+   */
   
  const server = http.createServer(app);
  server.listen(app.get('port'), app.get('host'), ()=>{
@@ -13,7 +18,7 @@ const app                   = require('./app');
     const serverAddr = server.address().address;
     const serverPort = server.address().port;
     
-    const tunnel = localtunnel(serverPort, {"subdomain":app.get('appName')}, function(err, tunnel){
+    const tunnel = localtunnel(serverPort, {"subdomain":app.get('appName')}, (err, tunnel)=>{
         if(err){
             console.log('%s Localtunnel returned an error %s', chalk.red('x'), err);
         } else {
