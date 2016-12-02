@@ -74,7 +74,8 @@
     csp: { 
         policy: {
             'default-src': '\'self\'',
-            'img-src': '*'
+            'img-src': '\'self\' data:'
+            
         }
     },
     xframe: 'SAMEORIGIN',
