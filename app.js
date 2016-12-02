@@ -18,6 +18,7 @@
  const MongoStore           = require('connect-mongo')(session);
  const flash                = require('flash');
  const lusca                = require('lusca');
+ const localtunnel          = require('localtunnel');
  
  /**
   * Load environment variables from .env file
@@ -44,7 +45,7 @@
  /**
   * Express configuration.
   */
-  
+ app.set('appName', process.env.APPNAME);
  app.set('host', process.env.HOST);
  app.set('port', process.env.PORT || 8080);
  app.set('views', path.join(__dirname, 'views'));
@@ -103,6 +104,7 @@
  
  app.use("/", homeRoute);
  
+ 
  /**
   * Start Express Server
   */
@@ -113,8 +115,21 @@
     const serverAddr = server.address().address;
     const serverPort = server.address().port;
     
-    console.log('%s App is running at %s:%d in %s mode', chalk.green('✓'), serverAddr, serverPort, app.get('env'));
-    console.log('Press CTRL-C to stop\n');
+    const tunnel = localtunnel(serverPort, {"subdomain":app.get('appName')}, function(err, tunnel){
+        if(err){
+            console.log('%s Localtunnel returned an error %s', chalk.red('x'), err);
+        } else {
+        
+            console.log('%s Local App is running at %s:%d in %s mode', chalk.green('✓'), serverAddr, serverPort, app.get('env'));
+            console.log('%s External URL %s', chalk.green('✓'), tunnel.url);
+            console.log('Press CTRL-C to stop\n');   
+        }
+    });
+    
+    tunnel.on('close', function(){
+       console.log('%s External URL has been closed', chalk.green('✓')) ;
+    });
+    
      
  });
  
