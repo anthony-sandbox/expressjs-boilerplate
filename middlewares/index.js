@@ -11,6 +11,7 @@
  import bodyParser           from './lib/body-parser';
  import flash                from './lib/flash';
  import mongoose             from './lib/mongoose';
+ import lusca                from './lib/lusca';
 
 
  export default (app) => {
@@ -21,6 +22,7 @@
    cors(app);
    sass(app);
    session(app);
+   lusca(app);
    bodyParser(app);
    flash(app);
  };

@@ -2,13 +2,12 @@
    * Module dependencies
    */
  
- import path    from 'path';
- import express from 'express';
- import dotenv  from 'dotenv';
+ import path                 from 'path';
+ import express              from 'express';
+ import dotenv               from 'dotenv';
  
- import middlewares          from './middlewares/';
- import * as homeController  from './controllers/home';
- 
+ import middlewares          from './middlewares';
+ import routes               from './routes/index';
  
  /**
   * Load environment variables from .env file
@@ -31,6 +30,12 @@
  app.set('views', path.join(__dirname, 'views'));
  app.set('view engine', process.env.VIEW_ENGINE);
  
+ /**
+  * Static assets
+  */
+  
+ app.use('/public',express.static(path.join(__dirname, 'public'), {maxAge: 31557600000}));
+ 
  
  /**
   * Middlewares
@@ -38,22 +43,14 @@
  
  middlewares(app);
  
+ 
  /**
-  * Static assets
+  * Routes
   */
   
- app.use('/public',express.static(path.join(__dirname, 'public'), {maxAge: 31557600000}));
+  
  
- /**
-  * Primary app routes
-  */
- 
- const homeRoute = express.Router();
- 
- 
- homeRoute.route("/").get(homeController.index);
- 
- app.use("/", homeRoute);
+ routes(app);
  
  /**
   * Export app

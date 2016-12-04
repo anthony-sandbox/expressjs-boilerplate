@@ -1,6 +1,7 @@
  /**
   * Module dependencies
   */
+  
  import lusca from 'lusca';
 
   export default (app) => {
