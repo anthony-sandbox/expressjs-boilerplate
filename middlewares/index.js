@@ -12,6 +12,7 @@
  import flash                from './lib/flash';
  import mongoose             from './lib/mongoose';
  import lusca                from './lib/lusca';
+ import methodOverride       from './lib/method-override';
 
 
  export default (app) => {
@@ -24,5 +25,6 @@
    session(app);
    lusca(app);
    bodyParser(app);
+   methodOverride(app);
    flash(app);
  };

@@ -4,7 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "babel-watch index.js"
+    "prestart": "npm run test & nsp check",
+    "start": "babel-watch index.js",
+    "test": "snyk test"
   },
   "repository": {
     "type": "git",
@@ -22,6 +24,7 @@
     "babel-core": "^6.18.2",
     "babel-preset-latest": "^6.16.0",
     "babel-watch": "^2.0.3",
+    "snyk": "^1.21.2",
     "yarn": "^0.17.10"
   },
   "dependencies": {
@@ -37,9 +40,11 @@
     "flash": "^1.1.0",
     "localtunnel": "^1.8.2",
     "lusca": "^1.4.1",
+    "method-override": "^2.3.7",
     "mongoose": "^4.7.1",
     "morgan": "^1.7.0",
     "node-sass-middleware": "^0.10.0",
+    "nsp": "^2.6.2",
     "pug": "^2.0.0-beta6"
   }
 }
